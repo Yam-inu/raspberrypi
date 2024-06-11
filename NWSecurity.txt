@@ -1,4 +1,4 @@
-//20240528
+//20240528 iptables practice
 sudo iptables -P INPUT DROP
 sudo iptables -P FORWARD DROP
 sudo iptables -t filter -A INPUT -p tcp --sport 80 -m state --state ESTABLISHED,RELATED -j ACCEPT
@@ -6,3 +6,32 @@ sudo iptables -t filter -A INPUT -p tcp --sport 443 -m state --state ESTABLISHED
 sudo iptables -t filter -A INPUT -p udp --sport 53 -j ACCEPT
 sudo iptables -t filter -A INPUT -p tcp --dport 80 -j ACCEPT
 sudo iptables -t filter -A INPUT -p tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m state --state NEW -j DROP
+
+
+//20240611 snort install
+sudo apt install -y build-essential autotools-dev libdumbnet-dev libluajit-5.1-dev libpcap-dev libpcre3-dev zlib1g-dev pkg-config libhwloc-dev cmake liblzma-dev openssl libssl-dev cpputest libsqlite3-dev uuid-dev libtool git autoconf bison flex
+
+cd ~
+mkdir snort-src
+cd snort-src
+sudo wget https://www.snort.org/downloads/snort/daq-2.0.7.tar.gz
+tar -xzvf daq-2.0.7.tar.gz 
+cd daq-2.0.7
+sudo ./configure
+sudo make
+sudo make install
+sudo ldconfig
+
+cd ~/snort-src
+sudo wget https://www.snort.org/downloads/snort/snort-2.9.20.tar.gz
+tar -xzvf snort-2.9.20.tar.gz
+cd snort-2.9.20
+sudo ./configure
+sudo make
+sudo meke install
+
+//if you can not found c library, execute "sudo cp -r /usr/include/ntirpc/* /usr/include/"
+
+cd ~
+mkdir snort snort/IDS snort/IDS/conf snort/IDS/log snort/IDS/rules
+sudo cp ~/snort-src/snort-2.9.20/etc/* ~/snort/IDS/conf
