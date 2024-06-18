@@ -35,3 +35,34 @@ sudo meke install
 cd ~
 mkdir snort snort/IDS snort/IDS/conf snort/IDS/log snort/IDS/rules
 sudo cp ~/snort-src/snort-2.9.20/etc/* ~/snort/IDS/conf
+
+
+//20240618 suricata install
+sudo apt install libpcre3 libpcre3-dbg libpcre3-dev build-essential libpcap-dev libyaml-0-2 libyaml-dev pkg-config zlib1g zlib1g-dev make libmagic-dev libjansson-dev rustc cargo python3-yaml liblua5.1-dev -y
+
+wget https://www.openinfosecfoundation.org/download/suricata-6.0.19.tar.gz
+tar -xvf suricata-6.0.19.tar.gz 
+cd  suricata-6.0.19/
+
+./configure -prefix=/usr -sysconfdir=/etc -localstatedir=/var -enable-nfqueue -enable-lua
+make
+sudo make install
+cd suricata-update
+sudo python setup.py build
+sudo python setup.py install
+cd ../
+sudo make install-full
+sudo suricata-update
+
+//rule file
+sudo -s
+cd /var/lib/suricta/rules/
+mv suricata.rules suricata.rules.org
+touch suricata.rules
+exit
+
+// execute
+sudo suricata -c /etc/suricata/suricata.yaml -i eth0 -S /var/lib/suricata/rules/suricata.rules
+
+// alert log file
+// cat /var/log/suricata/fast.log 
