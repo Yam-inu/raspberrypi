@@ -56,7 +56,7 @@ sudo suricata-update
 
 //rule file
 sudo -s
-cd /var/lib/suricta/rules/
+cd /var/lib/suricata/rules/
 mv suricata.rules suricata.rules.org
 touch suricata.rules
 exit
