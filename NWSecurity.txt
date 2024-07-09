@@ -65,4 +65,29 @@ exit
 sudo suricata -c /etc/suricata/suricata.yaml -i eth0 -S /var/lib/suricata/rules/suricata.rules
 
 // alert log file
-// cat /var/log/suricata/fast.log 
+// cat /var/log/suricata/fast.log
+
+// suricata signature
+# sample
+#alert icmp any any -> any any (sid:1000000; msg:"ICMP_detection";)
+# 1
+alert icmp any any -> 192.168.100.137 any (sid:1000001; msg:"ping_detection";)
+# 2
+alert tcp any any -> 192.168.100.137 22 (sid:1000002; msg:"ssh_detection";)
+# 3
+alert tcp any any -> 192.168.100.137 80 (sid:1000003; msg:"http_detection";)
+# 4
+alert tcp any any -> 192.168.100.61 any (sid:1000004; msg:"B_tcp_detection";)
+# 5
+alert tcp 192.168.100.137 any -> 192.168.100.137 any (sid:1000005; msg:"land_detection";)
+# 6
+alert tcp !192.168.100.0/24 any -> any any (sid:1000006; msg:"other_network_detection";)
+# 7
+alert tcp any any -> any any (sid:1000007; content:"Not Found"; msg:"not_found_detection";)
+# 8
+alert udp any any -> any any (sid:1000008; dsize:>1000; msg:"big_udp_detection";)
+# 9
+alert tcp any any -> any 20:100 (sid:1000009; flags:S; msg:"syn_detection";)
+# 10
+alert tcp any any -> any any (sid:1000010; flags:SFA; msg:"syn_fin_ack_detection";)
+
