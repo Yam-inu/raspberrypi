@@ -91,3 +91,25 @@ alert tcp any any -> any 20:100 (sid:1000009; flags:S; msg:"syn_detection";)
 # 10
 alert tcp any any -> any any (sid:1000010; flags:SFA; msg:"syn_fin_ack_detection";)
 
+// suricata kadai2
+1.
+ping 192.168.100.137
+2.
+ssh kataoka@192.168.100.137
+3.
+「http://192.168.100.137」にアクセス
+4.
+「http://192.168.100.137」にアクセス
+5.
+sudo hping3 192.168.100.61 --spoof 192.168.100.61
+6.
+sudo hping3 192.168.100.61 --spoof 192.168.1.60
+7.
+「http://192.168.100.137/test」にアクセス
+8.
+sudo hping3 192.168.100.61 --data 1010 --udp
+9
+sudo hping3 192.168.100.61 -S -p 22
+10.
+sudo hping3 192.168.100.61 -S -F -A
+
