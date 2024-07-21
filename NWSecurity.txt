@@ -72,6 +72,7 @@ sudo suricata -c /etc/suricata/suricata.yaml -i eth0 -S /var/lib/suricata/rules/
 #alert icmp any any -> any any (sid:1000000; msg:"ICMP_detection";)
 # 1
 alert icmp any any -> 192.168.100.137 any (sid:1000001; msg:"ping_detection";)
+alert icmp any any -> 192.168.100.137 any (sid:1000001; itype:8; msg:"ping_detection";)
 # 2
 alert tcp any any -> 192.168.100.137 22 (sid:1000002; msg:"ssh_detection";)
 # 3
