@@ -84,6 +84,8 @@ alert tcp 192.168.100.137 any -> 192.168.100.137 any (sid:1000005; msg:"land_det
 alert tcp !192.168.100.0/24 any -> any any (sid:1000006; msg:"other_network_detection";)
 # 7
 alert tcp any any -> any any (sid:1000007; content:"Not Found"; msg:"not_found_detection";)
+
+alert tcp any any -> any any (sid:1000007; content:"404"; http.response_code; msg:"not_found_detection";)
 # 8
 alert udp any any -> any any (sid:1000008; dsize:>1000; msg:"big_udp_detection";)
 # 9
